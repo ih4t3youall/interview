@@ -1,0 +1,112 @@
+-------------------------------------------
+Structure:
+-> ENDPOINT path
+---> METHOD
+     /path -> what is does | returns | [permissions]
+            - Input: ...
+-------------------------------------------
+
+-------------------------------------------
+->   USERS ENDPOINT /api/users
+---> GET
+     /all -> get a list of all users                            |List of Users| [logged, admin]
+     /me  -> get the current user (Identified through the JWT)  |User         | [logged]
+     /id  -> get a user by id.                                  |User         | [logged, admin]
+     /schema -> get a representation of the user object         |User Object  | []
+
+---> PUT
+     /password -> update current user password |{'updated': true/false}| [logged]
+                - Input:  {password: 'somepassword'}
+     /id       -> updates user by id           |{'updated': true/false}| [logged, admin]
+                - Input:  UserObject
+     /         -> updates current user  data   |{'updated': true/false}| [logged]
+                - Input:  UserObject
+
+---> DELETE
+     /  -> Deletes current User  |{'deleted': true/false}| [logged]
+
+---> POST
+     /  -> Creates a User. Returns the following json fields: 'id', 'name', 'surname', 'email'.
+         - Also it returns the x-auth-token header that contains the JWT, used to identify the user
+           in every request
+-------------------------------------------
+
+-------------------------------------------
+->   AUTH ENDPOINT /api/auth
+---> POST
+     /  -> Authenticates User | returns {'token' : JsonWebToken } |
+         - Input: {
+                    "email": "email",
+                    "password": "password"
+                  }
+-------------------------------------------
+
+-------------------------------------------
+->   USER LOCATION ENDPOINT /api/user_location
+---> POST
+     /  -> Updates current user location | {'updated': updated} | [logged]
+         - Input: {
+                    "coordinates": [lat, lon]
+                  }
+-------------------------------------------
+
+-------------------------------------------
+->   ALERTS ENDPOINT /api/alerts
+---> GET
+     /all -> get a list of all alerts                            |List of Alerts| [logged, admin]
+     /    -> get the current user alerts                         |Alert         | [logged]
+     /id  -> get an alert by id.                                 |Alert         | [logged, admin]
+     /schema -> get a representation of the Alert object         |Alert Object  | []
+---> PUT
+     /id  -> updates alert by id  |{'updated': true/false}| [logged]
+          - Input:  AlertObject
+
+---> DELETE
+     /id  -> Deletes an Alert  |{'deleted': true/false}| [logged]
+
+---> POST
+     /  -> Creates an Alert. Returns the created alert.
+
+-------------------------------------------
+
+-------------------------------------------
+->   PROFILE ENDPOINT /api/profiles
+
+---> GET
+     /       -> get the current user profiles                    |Profiles        | [logged]
+     /schema -> get a representation of the Profile object       |Profile Object  | []
+
+---> PUT
+     /id  -> updates profile by id  |{'updated': true/false}| [logged]
+          - Input:  ProfileObject
+
+---> DELETE
+     /id  -> Deletes a Profile  |{'deleted': true/false}| [logged] It will only work if the profile belongs to the current user. Else, it will return an error.
+
+---> POST
+     /  -> Creates a Profile. Returns the created profile.
+
+-------------------------------------------
+
+-------------------------------------------
+->   PROFILE PHOTO ENDPOINT /api/profile_photo
+---> GET
+     /    -> Get All Profile Photos belonging to a Profile         |Json with id, profile_id, etc. | [logged]
+     /id  -> Get Profile Photo by ID                               |Actual Photo                   | [logged]
+---> PUT
+     /id  -> updates alert by id  |{'updated': true/false}| [logged]
+          - Input:  AlertObject
+
+---> DELETE
+     /id  -> Deletes a Profile Photo  |{'deleted': true/false}| [logged]
+
+---> POST
+     /  -> Creates a Profile Photo. Returns {'created': true, 'id': id} or {'created': false, 'error': error msg}
+
+-------------------------------------------
+
+->   ALERT PHOTO ENDPOINT /api/alert_photo
+
+--- SAME ENDPOINTS AS PROFILE PHOTO ENDPOINT!
+
+-------------------------------------------

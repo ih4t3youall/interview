@@ -1,0 +1,19 @@
+{
+  "jwtPrivateKey": "secAppjwtPrivateKey",
+  "auth_facebook_api_key": "1122174107973116",
+  "auth_facebook_api_secret": "2839980ac061090de8356dd0aa5cd2cb",
+  "database": {
+    "username": "postgres",
+    "password": 12345,
+    "database": "postgres",
+    "host": "127.0.0.1",
+    "dialect": "postgresql",
+    "logging": false,
+    "pool": {
+      "min": 0,
+      "max": 10,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  }
+}

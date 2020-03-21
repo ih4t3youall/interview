@@ -1,0 +1,8 @@
+{
+  "jwtPrivateKey": "secAppEnvjwtPrivateKey",
+  "database": {
+    "username": "secAppEnvdbUser",
+    "password": "secAppEnvdbPw",
+    "database": "secAppEnvdbDB"
+  }
+}

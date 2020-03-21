@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - Free Bulma template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.8.x-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+</head>
+
+<body>
+
+<!-- START NAV -->
+<nav class="navbar is-white">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="admin.html">
+                Home
+            </a>
+            <a class="navbar-item" href="admin.html">
+                Configuración
+            </a>
+            <a class="navbar-item" href="admin.html">
+                Usuario
+            </a>
+        </div>
+    </div>
+</nav>
+<!-- END NAV -->
+<div class="container">
+    <div class="columns">
+        <div class="column is-3 ">
+            <aside class="menu is-hidden-mobile">
+                <p class="menu-label">
+                    General
+                </p>
+                <ul class="menu-list">
+                    <li><a class="is-active">Dashboard</a></li>
+                    <li><a onclick="redirect('query')">Query</a></li>
+                </ul>
+                <p class="menu-label">
+                    Administration
+                </p>
+                <ul class="menu-list">
+                    <li><a>Usuarios</a></li>
+                    <li><a>Alertas</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="column is-9">
+            <section class="hero is-info welcome is-small">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">
+                            Hello, Admin.
+                        </h1>
+                        <h2 class="subtitle">
+                            I hope you are having a great day!
+                        </h2>
+                    </div>
+                </div>
+            </section>
+            <section class="info-tiles">
+                <div class="tile is-ancestor has-text-centered">
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{user_count}</p>
+                            <p class="subtitle">Usuarios Registrados</p>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{alert_count}</p>
+                            <p class="subtitle">Total Alertas</p>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{active_alert_count}</p>
+                            <p class="subtitle">Alertas Activas</p>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{sightings_count}</p>
+                            <p class="subtitle">Avistamientos</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <div class="columns">
+                <div class="column" id="map" style="height: 500px; margin: 0; padding: 0;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+
+<script>
+
+      var map;
+
+      function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: -34.603898, lng: -58.381699},
+              zoom: 13
+          });
+
+          // Create an array of alphabetical characters used to label the markers.
+          var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+          // Add some markers to the map.
+          // Note: The code uses the JavaScript Array.prototype.map() method to
+          // create an array of markers based on a given "locations" array.
+          // The map() method here has nothing to do with the Google Maps API.
+          var markers = locations.map(function(location, i) {
+              return new google.maps.Marker({
+                  position: location,
+                  label: labels[i % labels.length]
+              });
+          });
+
+          // Add a marker clusterer to manage the markers.
+          var markerCluster = new MarkerClusterer(map, markers,
+              {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+
+      }
+
+      var locations = [];
+      // The following sintax will be formatted by the template engine
+      {for coordinates in alerts_locations}
+         locations.push({lat:{coordinates.lat}, lng: {coordinates.lng}});
+      {/for}
+
+</script>
+
+
+
+<script>
+    function redirect(where){
+
+        if(where === 'query'){
+            window.location.href = '/web/query/';
+        }
+
+    }
+</script>
+
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkuhUMAzzYCbNpHbIDcNwMJaTXqVd71_I&callback=initMap">
+</script>
+</html>
